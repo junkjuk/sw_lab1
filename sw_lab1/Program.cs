@@ -1,48 +1,37 @@
-﻿
-Console.Write("a = ");
-if (!double.TryParse(Console.ReadLine(),out var a) || a == 0)
+﻿using sw_lab1;
+
+var a = ReadNumber("a = ");
+var b = ReadNumber("b = ");
+var c = ReadNumber("c = ");
+
+var quadraticEquation = new QuadraticEquation(a, b, c);
+Console.WriteLine(quadraticEquation.ToString());
+
+var result = quadraticEquation.SolveEquation();
+Console.WriteLine($"There are {result.Count()} roots");
+
+var index = 1;
+foreach (var x in result)
 {
-    Console.WriteLine("Incorrect a");
-    return;
+    Console.WriteLine($"x{index++} = {x}");
 }
 
-Console.Write("b = ");
-if (!double.TryParse(Console.ReadLine(),out var b))
+
+double ReadNumber(string question)
 {
-    Console.WriteLine("Incorrect b");
-    return;
+    var isInvalid = false;
+    double numb = 0;
+    
+    Console.Write(question);
+    while (!isInvalid)
+    {
+        isInvalid = double.TryParse(Console.ReadLine(), out numb);
+        if (isInvalid)
+            return numb;
+        Console.WriteLine($"Error. Expected a valid real number, got invalid instead");
+        Console.Write(question);
+    }
+    
+    return numb;
 }
 
-Console.Write("c = ");
-if (!double.TryParse(Console.ReadLine(),out var c))
-{
-    Console.WriteLine("Incorrect c");
-    return;
-}
-
-Console.WriteLine($"Equation is: ({a}) x^2 + ({b}) x + ({c}) = 0");
-
-var sqrtD = Math.Sqrt(GetD(a, b, c));
-
-switch (sqrtD)
-{
-    case 0:
-        Console.WriteLine("There are 1 roots");
-        Console.WriteLine($"x1 = {GetX(a, b, sqrtD)}");
-        break;
-    case >0 :
-        Console.WriteLine("There are 2 roots");
-        Console.WriteLine($"x1 = {GetX(a, b, sqrtD)}");
-        Console.WriteLine($"x2 = {GetX(a, b, sqrtD*-1)}");
-        break;
-    default:
-        Console.WriteLine("There are 0 roots");
-        break;
-}
-
-double GetD(double a, double b, double c)
-    => b * b - 4 * a * c;
-
-
-double GetX(double a, double b, double d)
-    => (-1 * b + d) / (2 * a);
