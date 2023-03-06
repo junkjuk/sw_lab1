@@ -1,8 +1,30 @@
 ﻿using sw_lab1;
 
-var a = ReadNumber("a = ");
-var b = ReadNumber("b = ");
-var c = ReadNumber("c = ");
+double a = 0;
+double b = 0;
+double c = 0;
+
+if (args.Length == 0)
+{
+    a = ReadNumber("a = ");
+    b = ReadNumber("b = ");
+    c = ReadNumber("c = ");
+}
+else
+{
+    try
+    {
+        var numbers = GetNumbersFromFile(args[0]);
+        a = numbers[0];
+        b = numbers[1];
+        c = numbers[2];
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+        return;
+    }
+}
 
 var quadraticEquation = new QuadraticEquation(a, b, c);
 Console.WriteLine(quadraticEquation.ToString());
@@ -16,6 +38,22 @@ foreach (var x in result)
     Console.WriteLine($"x{index++} = {x}");
 }
 
+List<double> GetNumbersFromFile(string path)
+{
+    path = Path.Combine(Directory.GetCurrentDirectory(), path);
+    if (!File.Exists(path))
+    {
+        Console.WriteLine();
+        throw new Exception("File not exist");
+    }
+    var res = new List<double>();
+    var line = File.ReadLines(path).First();
+    var numbs = line.Split(" ");
+    res.Add(double.Parse(numbs[0]));
+    res.Add(double.Parse(numbs[1]));
+    res.Add(double.Parse(numbs[2]));
+    return res;
+}
 
 double ReadNumber(string question)
 {
