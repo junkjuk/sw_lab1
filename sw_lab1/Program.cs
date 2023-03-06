@@ -37,7 +37,7 @@ foreach (var x in result)
 {
     Console.WriteLine($"x{index++} = {x}");
 }
-//
+
 List<double> GetNumbersFromFile(string path)
 {
     path = Path.Combine(Directory.GetCurrentDirectory(), path);
