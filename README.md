@@ -14,3 +14,6 @@ dotnet run --project sw_lab1 <i>file name</i>
 
 File format: A\sB\sC\n
 Where \s - space, \n - new line
+
+## Revert commit 
+[Revert commit](https://github.com/junkjuk/sw_lab1/commit/e1d7219c84c6ed60b8f969a6d17f24cc1f8bda71)
